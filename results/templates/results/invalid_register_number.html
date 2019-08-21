@@ -1,0 +1,18 @@
+{% extends 'results/base.html' %}
+
+{% block title %}
+Invalid Register Number
+{% endblock %}
+
+{% block body %}
+<div class = 'container'>
+
+  <h4>This register number does not exist. Please contact your college for more details.</h4>
+  <p>Click here to check your results again.</p>
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit" class= "btn btn-danger">OK</button>
+    </form>
+
+</div>
+{% endblock%}

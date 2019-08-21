@@ -1,0 +1,67 @@
+
+<html>
+
+<head>
+  {% block head %}
+  {% endblock %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <title>
+    {% block title %}
+    {% endblock %}
+  </title>
+  {%load static%}
+  <link rel="stylesheet" type= "text/css" href="{%static 'results/style.css'%}"/>
+  </head>
+  <body>
+    <br>
+    <div class="container">
+
+      <!-- Static navbar -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            {% if user.is_authenticated%}
+            <ul class="nav navbar-nav">
+
+
+              <li><a href="{% url 'results:view_profile' %}">Profile</a></li>
+              <li><a href="{% url 'results:edit_profile' %}">Edit Profile</a></li>
+              <li><a href="{% url 'results:change_password' %}">Change Password</a></li>
+              <li><a href="{% url 'results:upload_results' %}">Upload Results</a></li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="{% url 'results:logout' %}">Logout</a></li>
+            </ul>
+            {% else %}
+            <ul class="nav navbar-nav">
+            <li><a class="navbar-brand" href="{% url 'results:view_results' %}">Results</a></li>
+            </ul>
+
+
+
+
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="{% url 'results:login' %}">Login</a></li>
+              <li><a href="{% url 'results:register' %}">Register</a></li>
+              <li><a href="{% url 'results:password_reset' %}">Reset Password</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+          {% endif %}
+        </div><!--/.container-fluid -->
+      </nav>
+      {% block body %}
+      {% endblock %}
+  </body>
+  </html>

@@ -1,0 +1,18 @@
+{% extends 'results/base.html' %}
+
+{% block title %}
+Permission Required
+{% endblock %}
+
+{% block body %}
+<div class = 'container'>
+
+  <h4>This user is not authenticated to upload results. Please contact your administrator for more details.</h4>
+  <p>Click here to login again.</p>
+  <form method="POST", action = '/logout/'>
+    {% csrf_token %}
+    <button type="submit" class= "btn btn-danger">Login</button>
+    </form>
+
+</div>
+{% endblock%}

@@ -1,0 +1,22 @@
+{% extends 'results/base.html' %}
+
+{% block title %}
+Upload Results
+{% endblock %}
+
+{% block body %}
+<div class = 'container'>
+  <h1>Upload Results</h1>
+  <form method="post" >
+      {% csrf_token %}
+      {{ form.management_form }}
+      {{ form.as_p }}
+      {{ formset.management_form }}
+      {% for f_form in formset %}
+          {{ f_form.management_form }}
+          {{ f_form.as_p }}
+      {% endfor %}
+      <button type="submit" class= "btn btn-danger">Submit</button>
+  </form>
+</div>
+{% endblock%}

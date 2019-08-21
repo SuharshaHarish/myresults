@@ -1,0 +1,18 @@
+{% extends 'results/base.html' %}
+
+{% block title %}
+Upload Results
+{% endblock %}
+
+{% block body %}
+<div class = 'container'>
+  <h1>Saved Results</h1>
+  <form method="post" >
+    {% csrf_token %}
+  <p>The results have been saved.</p>
+  <p>Click here to upload more results</p>
+
+    <button type="submit" class= "btn btn-danger">Add</button>
+  </form>
+</div>
+{% endblock%}

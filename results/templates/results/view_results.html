@@ -1,0 +1,20 @@
+{% extends 'results/base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+
+
+    <form method="POST">
+      {% csrf_token %}
+      {{ form }}
+
+        <button type="submit" class= "btn btn-danger" style="display: inline-block">OK</button>
+
+    </form>
+
+  </div>
+{% endblock %}
