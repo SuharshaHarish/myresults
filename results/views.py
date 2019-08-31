@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.forms import modelformset_factory,inlineformset_factory
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
+# from django.views.decorators.cache import cache_control
 
 
 def register(request):
@@ -25,7 +26,8 @@ def register(request):
     args = {'form':form}
     return render(request,'results/reg_form.html',args)
 
-
+# @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+# @login_required(login_url= settings.LOGIN_URL)
 def view_profile(request):
     args = {'user': request.user}
 
@@ -159,3 +161,6 @@ def invalid_register_number(request):
     #     return render(request,'results/invalid_register_number.html')
     # else:
     return render(request,'results/invalid_register_number.html')
+
+def csrf_failure(request,reason=""):
+    return redirect(reverse('results:logout'))
