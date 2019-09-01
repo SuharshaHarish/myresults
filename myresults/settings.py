@@ -153,5 +153,7 @@ LOGIN_EXEMPT_URLS = (
 )
 PERMISSION_REQUIRED_URL = ('/permission-required/')
 
+CSRF_FAILURE_VIEW = ('results.views.csrf_failure')
+
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 1025

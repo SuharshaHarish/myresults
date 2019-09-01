@@ -27,7 +27,9 @@ def create_profile(sender, **kwargs):
 
 post_save.connect(create_profile, sender= User)
 
-
+class UserAdmin(models.Model):
+    admin_user = models.ForeignKey(User, on_delete = models.CASCADE)
+    admin_username = models.CharField(max_length=20,default='')
 
 class StudentResults(models.Model):
     GRADE_CHOICES=[

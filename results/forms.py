@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
-from .models import StudentDetails,StudentResults
+from .models import StudentDetails,StudentResults,UserAdmin
 from django.forms import inlineformset_factory,modelformset_factory
 from django.forms.models import BaseInlineFormSet
 
@@ -29,6 +29,39 @@ class RegistrationForm(UserCreationForm):
             user.save()
 
             return user
+
+class AdminRegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'password1',
+            'password2',
+        )
+
+    def save(self,commit=True):
+        user = super(AdminRegistrationForm,self).save(commit=False)
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.email = self.cleaned_data['email']
+
+        user.is_staff = True
+        user.is_superuser = True
+
+
+
+        if commit:
+            user.save()
+            query = UserAdmin(admin_user = user , admin_username = user)
+            query.save()
+
+            return user
+    # def save_admin()
 
 class EditProfileForm (UserChangeForm):
 

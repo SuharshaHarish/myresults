@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse, Http404
 from django.template import loader
 from .models import StudentDetails,StudentResults
-from results.forms import RegistrationForm,EditProfileForm
+from results.forms import RegistrationForm,EditProfileForm,AdminRegistrationForm
 from django.contrib.auth.forms import UserChangeForm,PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
@@ -11,6 +11,7 @@ from django.urls import reverse
 from django.forms import modelformset_factory,inlineformset_factory
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
+# from django.views.decorators.cache import cache_control
 
 
 def register(request):
@@ -26,6 +27,21 @@ def register(request):
     return render(request,'results/reg_form.html',args)
 
 
+def admin_register(request):
+    if request.method == 'POST' and request.user.is_superuser:
+        form = AdminRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+            return redirect(reverse('results:login'))
+    elif request.user.is_superuser:
+        form = AdminRegistrationForm()
+        args = {'form':form}
+
+        return render(request,'results/admin_reg_form.html',args)
+    return redirect(reverse('results:login'))
+# @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+# @login_required(login_url= settings.LOGIN_URL)
 def view_profile(request):
     args = {'user': request.user}
 
@@ -159,3 +175,6 @@ def invalid_register_number(request):
     #     return render(request,'results/invalid_register_number.html')
     # else:
     return render(request,'results/invalid_register_number.html')
+
+def csrf_failure(request,reason=""):
+    return redirect(reverse('results:logout'))
